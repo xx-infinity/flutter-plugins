@@ -115,6 +115,35 @@ void WebviewWindow::CreateAndShow(const std::wstring &title, int height, int wid
   ShowWindow(hwnd_.get(), SW_SHOW);
   UpdateWindow(hwnd_.get());
 
+  HWND mainWindow = FindWindowW(L"FLUTTER_RUNNER_WIN32_WINDOW", L"webview_window_example");
+  if (!mainWindow) {
+    std::cout << "Das geht net!" << std::endl;
+    LPVOID lpMsgBuf;
+    //LPVOID lpDisplayBuf;
+    DWORD dw = GetLastError();
+
+    FormatMessage(
+      FORMAT_MESSAGE_ALLOCATE_BUFFER |
+      FORMAT_MESSAGE_FROM_SYSTEM |
+      FORMAT_MESSAGE_IGNORE_INSERTS,
+      NULL,
+      dw,
+      MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
+      (LPTSTR)&lpMsgBuf,
+      0, NULL);
+    /*lpDisplayBuf = (LPVOID)LocalAlloc(LMEM_ZEROINIT,
+      (lstrlen((LPCTSTR)lpMsgBuf) + lstrlen((LPCTSTR)FindWindow) + 40) * sizeof(TCHAR));
+    StringCchPrintf((LPTSTR)lpDisplayBuf,
+      LocalSize(lpDisplayBuf) / sizeof(TCHAR),
+      TEXT("%s failed with error %d: %s"),
+      FindWindow, dw, lpMsgBuf);*/
+    //MessageBox(NULL, (LPCTSTR)lpMsgBuf, TEXT("Error"), MB_OK);
+    std::cout << wide_to_utf8((LPCTSTR)lpMsgBuf) << std::endl;
+    LocalFree(lpMsgBuf);
+  }
+
+  ShowWindow(mainWindow, SW_HIDE);
+
 }
 
 void WebviewWindow::SetBrightness(int brightness) {
