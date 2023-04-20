@@ -65,8 +65,9 @@ void WebviewWindow::CreateAndShow(const std::wstring &title, int height, int wid
   UINT dpi = FlutterDesktopGetDpiForMonitor(monitor);
   double scale_factor = dpi / 96.0;
 
-  // DWORD dwStyle = WS_OVERLAPPEDWINDOW | WS_VISIBLE;
-  DWORD dwStyle = WS_POPUP|WS_VISIBLE;
+  DWORD dwStyle = WS_OVERLAPPEDWINDOW | WS_VISIBLE;
+  // DWORD dwStyle = WS_POPUP|WS_VISIBLE;
+  // WS_OVERLAPPEDWINDOW
   if (openMaximized)
     dwStyle |= WS_MAXIMIZE;
 
