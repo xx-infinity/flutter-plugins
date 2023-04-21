@@ -72,22 +72,20 @@ void WebviewWindow::CreateAndShow(const std::wstring &title, int height, int wid
       Scale(width, scale_factor), Scale(height, scale_factor),
       nullptr, nullptr, GetModuleHandle(nullptr), this));
   } else{
-    if(borderless){
-    hwnd_ = wil::unique_hwnd(::CreateWindow(
-      kWebViewWindowClassName, title.c_str(),
-      WS_POPUP|WS_VISIBLE,
-      windowPosX, windowPosY,
-      width, height,
-      nullptr, nullptr, GetModuleHandle(nullptr), this));
-    }
+     DWORD dwStyle = WS_OVERLAPPEDWINDOW | WS_VISIBLE;
     if (openMaximized){
+        dwStyle |= WS_MAXIMIZE;
+    }
+    if(borderless){
+      dwStyle =  WS_POPUP|WS_VISIBLE;
+    }
+
       hwnd_ = wil::unique_hwnd(::CreateWindow(
       kWebViewWindowClassName, title.c_str(),
-      WS_MAXIMIZE,
+      dwStyle,
       windowPosX, windowPosY,
       width, height,
       nullptr, nullptr, GetModuleHandle(nullptr), this));
-    }
     
   }
   if (!hwnd_) {
