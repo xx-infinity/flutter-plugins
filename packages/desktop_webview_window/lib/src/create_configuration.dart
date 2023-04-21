@@ -19,6 +19,7 @@ class CreateConfiguration {
 
   final bool usePluginDefaultBehaviour;
   final bool openMaximized;
+  final bool borderless;
 
   const CreateConfiguration({
     this.windowWidth = 1280,
@@ -31,6 +32,7 @@ class CreateConfiguration {
     this.userDataFolderWindows = 'webview_window_WebView2',
     this.usePluginDefaultBehaviour = true,
     this.openMaximized = false,
+    this.borderless = false
   });
 
   factory CreateConfiguration.platform() {
@@ -50,5 +52,6 @@ class CreateConfiguration {
         "userDataFolderWindows": userDataFolderWindows,
         "usePluginDefaultBehaviour": usePluginDefaultBehaviour,
         "openMaximized": openMaximized,
+        "borderless":"borderless"
       };
 }
