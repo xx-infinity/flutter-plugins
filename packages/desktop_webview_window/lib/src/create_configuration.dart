@@ -19,21 +19,22 @@ class CreateConfiguration {
 
   final bool useWindowPositionAndSize;
   final bool openMaximized;
+
+  ///windows only无边框选项
   final bool borderless;
 
-  const CreateConfiguration({
-    this.windowWidth = 1280,
-    this.windowHeight = 720,
-    this.windowPosX = 0,
-    this.windowPosY = 0,
-    this.title = "",
-    this.titleBarHeight = 40,
-    this.titleBarTopPadding = 0,
-    this.userDataFolderWindows = 'webview_window_WebView2',
-    this.useWindowPositionAndSize = false,
-    this.openMaximized = false,
-    this.borderless = false
-  });
+  const CreateConfiguration(
+      {this.windowWidth = 1280,
+      this.windowHeight = 720,
+      this.windowPosX = 0,
+      this.windowPosY = 0,
+      this.title = "",
+      this.titleBarHeight = 40,
+      this.titleBarTopPadding = 0,
+      this.userDataFolderWindows = 'webview_window_WebView2',
+      this.useWindowPositionAndSize = false,
+      this.openMaximized = false,
+      this.borderless = false});
 
   factory CreateConfiguration.platform() {
     return CreateConfiguration(
@@ -52,6 +53,6 @@ class CreateConfiguration {
         "userDataFolderWindows": userDataFolderWindows,
         "useWindowPositionAndSize": useWindowPositionAndSize,
         "openMaximized": openMaximized,
-        "borderless":"borderless"
+        "borderless": borderless
       };
 }
