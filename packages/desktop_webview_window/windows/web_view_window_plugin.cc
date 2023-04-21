@@ -58,6 +58,8 @@ void WebviewWindowPlugin::HandleMethodCall(
     auto userDataFolder = std::get<std::string>(arguments->at(flutter::EncodableValue("userDataFolderWindows")));
     auto useWindowPositionAndSize = std::get<bool>(arguments->at(flutter::EncodableValue("useWindowPositionAndSize")));
     auto openMaximized = std::get<bool>(arguments->at(flutter::EncodableValue("openMaximized")));
+    ///获取是否需要无边框
+    auto borderless = std::get<bool>(arguments->at(flutter::EncodableValue("borderless")));
     auto windowPosX = arguments->at(flutter::EncodableValue("windowPosX")).LongValue();
     auto windowPosY = arguments->at(flutter::EncodableValue("windowPosY")).LongValue();
 
@@ -78,7 +80,7 @@ void WebviewWindowPlugin::HandleMethodCall(
             return;
           }
           result->Success(flutter::EncodableValue(window_id));
-        });
+        },borderless);
     next_window_id_++;
     windows_[window_id] = std::move(window);
   } else if (method_call.method_name() == "launch") {
