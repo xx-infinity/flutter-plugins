@@ -70,7 +70,11 @@ public class DesktopWebviewWindowPlugin: NSObject, FlutterPlugin {
         result(FlutterError(code: "0", message: "can not find webview for id: \(viewId)", details: nil))
         return
       }
-      wc.webViewController.load(url: parsedUrl)
+      if(parsedUrl.scheme == "http" || parsedUrl.scheme == "https"){
+            wc.webViewController.load(url: parsedUrl);
+      }else{
+      wc.webViewController.load(url: URL(fileURLWithPath: url));
+      }
       result(nil)
       break
     case "registerJavaScripInterface":
