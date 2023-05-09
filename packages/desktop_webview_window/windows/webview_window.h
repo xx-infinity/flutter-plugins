@@ -22,7 +22,6 @@
 
 #include "flutter_view.h"
 #include "web_view.h"
-
 class WebviewWindow {
 
  public:
@@ -43,6 +42,10 @@ class WebviewWindow {
                      int windowPosX, int windowPosY, bool useWindowPositionAndSize,
                      bool openMaximized, CreateCallback callback,bool borderless);
 
+
+  ///修改窗口大小,窗口位置和z-index
+  void updateWindow(int windowPosX, int windowPosY,int width, int height,int index);              
+
   // OS callback called by message pump. Handles the WM_NCCREATE message which
   // is passed when the non-client area is being created and enables automatic
   // non-client DPI scaling so that the non-client area automatically
@@ -52,6 +55,7 @@ class WebviewWindow {
                                   UINT message,
                                   WPARAM wparam,
                                   LPARAM lparam) noexcept;
+  void showWebView(bool showWebView);                                
 
   void SetBrightness(int brightness);
 
@@ -91,6 +95,7 @@ class WebviewWindow {
                          LPARAM lparam) noexcept;
 
   LRESULT HandleNCHitTest(int x, int y) noexcept;
+  
 
   void SetBorderless() noexcept;
 

@@ -49,9 +49,6 @@ WebviewWindow::~WebviewWindow() {
   SetWindowLongPtr(hwnd_.get(), GWLP_USERDATA, 0);
   hwnd_.reset();
 }
-
-IDI_MYICON ICON "myicon.ico"
-
 void WebviewWindow::CreateAndShow(const std::wstring &title, int height, int width,
                                   const std::wstring &userDataFolder,
                                   int windowPosX, int windowPosY, bool usePluginDefaultBehaviour,
@@ -81,20 +78,19 @@ void WebviewWindow::CreateAndShow(const std::wstring &title, int height, int wid
     if(borderless){
       dwStyle =  WS_POPUP|WS_VISIBLE;
     }
-    
+
       hwnd_ = wil::unique_hwnd(::CreateWindow(
       kWebViewWindowClassName, title.c_str(),
       dwStyle,
       windowPosX, windowPosY,
       width, height,
       nullptr, nullptr, GetModuleHandle(nullptr), this));
+      
 
-      // 加载图标文件
-      HICON hIcon = LoadIcon(GetModuleHandle(nullptr), MAKEINTRESOURCE(IDI_MYICON));
+      
 
-      // 设置窗口图标
-      SendMessage(hwnd_, WM_SETICON, ICON_SMALL, (LPARAM)hIcon);
-      SendMessage(hwnd_, WM_SETICON, ICON_BIG, (LPARAM)hIcon);
+
+
     
   }
   if (!hwnd_) {
@@ -146,7 +142,19 @@ void WebviewWindow::CreateAndShow(const std::wstring &title, int height, int wid
 
 }
 
+void WebviewWindow::updateWindow(int windowPosX, int windowPosY,int width, int height,int index){
+  SetWindowPos(hwnd_.get(), HWND_NOTOPMOST, windowPosX, windowPosY, width, height,SWP_NOACTIVATE);
+  UpdateWindow(hwnd_.get());
+}
+
 void WebviewWindow::SetBrightness(int brightness) {
+
+}
+
+
+
+void WebviewWindow::showWebView(bool showWebView){
+  ShowWindow(hwnd_.get(), showWebView?SW_SHOW:SW_HIDE);
 }
 
 // static

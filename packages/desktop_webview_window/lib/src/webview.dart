@@ -37,6 +37,12 @@ abstract class Webview {
   /// Navigates to the given URL.
   void launch(String url);
 
+  ///更新webview窗口的位置
+  Future<void> updateWindow(int x, int y, int width, int height, int index);
+
+  ///是否显示webview
+  Future<void> showWebview(bool showWebview);
+
   /// change webview theme.
   ///
   /// available only: macOS (Brightness.dark only 10.14+)
@@ -71,7 +77,8 @@ abstract class Webview {
 
   void addOnWebMessageReceivedCallback(OnWebMessageReceivedCallback callback);
 
-  void removeOnWebMessageReceivedCallback(OnWebMessageReceivedCallback callback);
+  void removeOnWebMessageReceivedCallback(
+      OnWebMessageReceivedCallback callback);
 
   /// Close the web view window.
   void close();

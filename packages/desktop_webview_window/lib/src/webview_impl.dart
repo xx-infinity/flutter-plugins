@@ -128,6 +128,32 @@ class WebviewImpl extends Webview {
     });
   }
 
+  ///nlyForWindows
+  Future<void> updateWindow(
+      int x, int y, int width, int height, int index) async {
+    if (Platform.isMacOS) {
+      return;
+    }
+    await channel.invokeMethod("updateWindow", {
+      "x": x,
+      "y": y,
+      "width": width,
+      "height": height,
+      "index": index,
+      "viewId": viewId,
+    });
+  }
+
+  Future<void> showWebview(bool showWebview) async {
+    if (Platform.isMacOS) {
+      return;
+    }
+    await channel.invokeMethod("showWebview", {
+      "showWebView": showWebview ? 1 : 0,
+      "viewId": viewId,
+    });
+  }
+
   @override
   void setBrightness(Brightness? brightness) {
     /// -1 : system default
@@ -211,7 +237,8 @@ class WebviewImpl extends Webview {
   }
 
   @override
-  void removeOnWebMessageReceivedCallback(OnWebMessageReceivedCallback callback) {
+  void removeOnWebMessageReceivedCallback(
+      OnWebMessageReceivedCallback callback) {
     _onWebMessageReceivedCallbacks.remove(callback);
   }
 
