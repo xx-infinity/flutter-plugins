@@ -28,11 +28,14 @@ public class DesktopWebviewWindowPlugin: NSObject, FlutterPlugin {
         result(FlutterError(code: "0", message: "arg is not map", details: nil))
         return
       }
-      let width = argument["windowWidth"] as? Int ?? 1280
-      let height = argument["windowHeight"] as? Int ?? 720
+
+      let width =  640
+      let height =  480
       let title = argument["title"] as? String ?? ""
       let titleBarHeight = argument["titleBarHeight"] as? Int ?? 50
       let titleBarTopPadding = argument["titleBarTopPadding"] as? Int ?? 0
+
+    
 
       let controller = WebviewWindowController(
         viewId: viewId, methodChannel: methodChannel,
@@ -42,6 +45,7 @@ public class DesktopWebviewWindowPlugin: NSObject, FlutterPlugin {
       controller.webviewPlugin = self
       webviews[viewId] = controller
       controller.showWindow(nil)
+      controller.window?.orderOut(nil)
       result(viewId)
       viewId += 1
       break
@@ -274,7 +278,32 @@ public class DesktopWebviewWindowPlugin: NSObject, FlutterPlugin {
         result(FlutterError(code: "0", message: "param javaScriptString not found", details: nil))
         return
       }
+      result(nil)
       wc.webViewController.evaluateJavaScript(javaScriptString: js, completer: result)
+      break
+    case "showWebview":
+      guard let argument = call.arguments as? [String: Any?] else {
+        result(FlutterError(code: "0", message: "arg is not map", details: nil))
+        return
+      }
+      guard let viewId = argument["viewId"] as? Int64 else {
+        result(FlutterError(code: "0", message: "param viewId not found", details: nil))
+        return
+      }
+      guard let showWebView = argument["showWebView"] as? Int64 else {
+        result(FlutterError(code: "0", message: "param showWebView not found", details: nil))
+        return
+      }
+      let controller =  webviews[viewId]
+      DispatchQueue.main.async {
+            if(showWebView == 1){
+               controller?.window?.makeKeyAndOrderFront(nil)
+            }
+            else{
+              controller?.window?.orderOut(nil)
+            }
+      }
+      result(nil)
       break
     default:
       result(FlutterMethodNotImplemented)
