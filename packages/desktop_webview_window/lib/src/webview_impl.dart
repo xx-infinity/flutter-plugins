@@ -145,9 +145,6 @@ class WebviewImpl extends Webview {
   }
 
   Future<void> showWebview(bool showWebview) async {
-    if (Platform.isMacOS) {
-      return;
-    }
     await channel.invokeMethod("showWebview", {
       "showWebView": showWebview ? 1 : 0,
       "viewId": viewId,
