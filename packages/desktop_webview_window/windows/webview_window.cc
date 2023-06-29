@@ -143,6 +143,8 @@ void WebviewWindow::CreateAndShow(const std::wstring &title, int height, int wid
 }
 
 void WebviewWindow::updateWindow(int windowPosX, int windowPosY,int width, int height,int index){
+   ///不知道為啥在多屏情況下要設置兩次才能正確顯示,需要看一下windows窗口的繪製過程
+  SetWindowPos(hwnd_.get(), HWND_TOP, windowPosX, windowPosY, width, height,SWP_SHOWWINDOW);
   SetWindowPos(hwnd_.get(), HWND_NOTOPMOST, windowPosX, windowPosY, width, height,SWP_NOACTIVATE);
   UpdateWindow(hwnd_.get());
 }
